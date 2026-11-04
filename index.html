@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prufrock Coffee — Unofficial Motion Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0907;--bg2:#17100c;--cream:#f3e9dc;--mute:#a8998a;--cu:#e0924d;--cu2:#ffb877;--line:rgba(243,233,220,.12);
+--serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.loading{overflow:hidden}
+a{color:inherit;text-decoration:none}
+body::after{content:"";position:fixed;inset:-50%;pointer-events:none;z-index:90;opacity:.07;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* loader */
+#loader{position:fixed;inset:0;background:var(--cu);color:#1a0f08;z-index:200;display:grid;place-items:center;transition:transform 1.1s cubic-bezier(.77,0,.18,1)}
+#loader.done{transform:translateY(-101%)}
+#loader .num{font:300 clamp(5rem,22vw,16rem)/1 var(--serif);font-variation-settings:"opsz" 144}
+#loader small{position:absolute;bottom:6vh;letter-spacing:.4em;text-transform:uppercase;font-size:.7rem}
+#loader .bar{position:absolute;left:0;bottom:0;height:6px;background:#1a0f08;width:0}
+
+/* cursor */
+#cur{position:fixed;left:0;top:0;width:18px;height:18px;border-radius:50%;background:var(--cream);mix-blend-mode:difference;pointer-events:none;z-index:150;transform:translate(-50%,-50%);transition:width .3s,height .3s}
+#cur.big{width:70px;height:70px}
+@media(pointer:coarse){#cur{display:none}}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;padding:22px 5vw;backdrop-filter:blur(14px);background:linear-gradient(#0d0907cc,transparent)}
+nav .logo{font:600 1.2rem var(--serif);letter-spacing:.02em}
+nav .logo i{color:var(--cu);font-style:normal}
+nav ul{display:flex;gap:2.2rem;list-style:none;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+nav ul a{position:relative;padding:4px 0}
+nav ul a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--cu);transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+nav ul a:hover::after{transform:scaleX(1);transform-origin:left}
+@media(max-width:720px){nav ul{display:none}}
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--cu);z-index:120;width:0}
+
+/* hero */
+.hero{min-height:100svh;position:relative;display:grid;place-items:center;padding:14vh 5vw 8vh;overflow:hidden;
+background:radial-gradient(60vw 60vw at 70% 55%,#3a2214 0%,transparent 65%),radial-gradient(40vw 40vw at 10% 90%,#2a1609 0%,transparent 70%)}
+.hero h1{font:300 clamp(3.6rem,14.5vw,13rem)/.86 var(--serif);font-variation-settings:"opsz" 144;letter-spacing:-.03em;position:relative;z-index:3;mix-blend-mode:normal}
+.hero h1 .row{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .row:nth-child(2){text-align:right;font-style:italic;color:var(--cu2)}
+.hero h1 .ch{display:inline-block;transform:translateY(110%) rotate(8deg);transition:transform 1.2s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*55ms + 1.3s)}
+body.ready .hero h1 .ch{transform:none}
+.hero .sub{position:relative;z-index:3;max-width:34ch;color:var(--mute);line-height:1.6;margin-top:3vh;font-size:1.02rem;opacity:0;transform:translateY(20px);transition:all 1.2s 2.4s cubic-bezier(.16,1,.3,1)}
+body.ready .hero .sub{opacity:1;transform:none}
+.hero .wrap{position:relative;width:100%;max-width:1400px}
+.hero .cupwrap{position:absolute;right:2vw;top:50%;width:min(46vw,560px);z-index:2;transform:translateY(-46%);transition:transform .2s}
+.hero .cupwrap svg{width:100%;filter:drop-shadow(0 40px 60px rgba(0,0,0,.6));animation:bob 7s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-16px) rotate(-1.5deg)}}
+@media(max-width:800px){.hero .cupwrap{position:relative;width:80vw;transform:none;margin:4vh auto 0;right:auto;top:auto}}
+.badge{position:absolute;left:5vw;bottom:6vh;width:130px;height:130px;z-index:3}
+.badge svg{width:100%;animation:spin 18s linear infinite}
+.badge b{position:absolute;inset:0;display:grid;place-items:center;font:600 1.6rem var(--serif);color:var(--cu)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bean{position:absolute;z-index:1;opacity:.85;animation:fall linear infinite}
+@keyframes fall{from{transform:translateY(-12vh) rotate(0)}to{transform:translateY(112vh) rotate(540deg)}}
+.steam path{fill:none;stroke:rgba(255,240,220,.55);stroke-width:6;stroke-linecap:round;stroke-dasharray:60 120;animation:steam 3.4s ease-in-out infinite}
+.steam path:nth-child(2){animation-delay:.9s}.steam path:nth-child(3){animation-delay:1.8s}
+@keyframes steam{0%{stroke-dashoffset:120;opacity:0}30%{opacity:1}100%{stroke-dashoffset:-60;opacity:0;transform:translateY(-14px)}}
+.scrollhint{position:absolute;bottom:5vh;right:5vw;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);z-index:3;display:flex;align-items:center;gap:12px}
+.scrollhint i{display:block;width:1px;height:50px;background:linear-gradient(var(--cu),transparent);animation:drop 2s infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* marquee */
+.marq{border-block:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:26px 0;background:var(--bg2)}
+.marq div{display:inline-flex;gap:3rem;animation:mq 38s linear infinite;font:300 italic clamp(2rem,5vw,4rem) var(--serif)}
+.marq span::after{content:"✺";color:var(--cu);margin-left:3rem;font-style:normal}
+.marq:hover div{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* common */
+section{position:relative}
+.pad{padding:14vh 5vw}
+.eyebrow{font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;color:var(--cu);margin-bottom:2rem;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:40px;height:1px;background:var(--cu)}
+h2{font:300 clamp(2.4rem,7vw,6rem)/.98 var(--serif);letter-spacing:-.02em;font-variation-settings:"opsz" 144}
+h2 em{color:var(--cu2)}
+.rv{opacity:0;transform:translateY(60px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.mag{display:inline-flex;align-items:center;gap:10px;padding:16px 30px;border:1px solid var(--cream);border-radius:99px;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;position:relative;overflow:hidden;transition:color .5s,border-color .5s;will-change:transform}
+.mag::before{content:"";position:absolute;inset:0;background:var(--cu);transform:translateY(101%);border-radius:50% 50% 0 0;transition:transform .6s cubic-bezier(.2,.8,.2,1),border-radius .6s}
+.mag:hover::before{transform:none;border-radius:0}
+.mag:hover{color:#1a0f08;border-color:var(--cu)}
+.mag span{position:relative}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:8vh}
+.stat{border-top:1px solid var(--line);padding-top:1.4rem}
+.stat b{display:block;font:300 clamp(3rem,7vw,5.5rem)/1 var(--serif);color:var(--cu2)}
+.stat span{color:var(--mute);font-size:.85rem;letter-spacing:.08em}
+
+/* story */
+.story{height:380vh;background:var(--bg2)}
+.story .stick{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;padding:0 5vw;overflow:hidden}
+.story .glass{width:min(34vw,380px);margin:auto}
+.story svg{width:100%}
+.steps{position:relative;height:50vh}
+.stp{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(40px);filter:blur(10px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.stp.on{opacity:1;transform:none;filter:none}
+.stp b{font:300 clamp(5rem,14vw,11rem)/.9 var(--serif);color:transparent;-webkit-text-stroke:1px var(--cu)}
+.stp h3{font:300 clamp(2rem,4vw,3.4rem) var(--serif);margin:1rem 0}
+.stp p{color:var(--mute);max-width:38ch;line-height:1.7}
+@media(max-width:800px){.story .stick{grid-template-columns:1fr;grid-template-rows:40% 50%}.story .glass{width:46vw}}
+
+/* menu */
+.tabs{display:flex;gap:.8rem;flex-wrap:wrap;margin:6vh 0 5vh}
+.tab{background:none;border:1px solid var(--line);color:var(--cream);padding:12px 24px;border-radius:99px;font:inherit;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .4s}
+.tab:hover{border-color:var(--cu)}
+.tab.on{background:var(--cu);color:#1a0f08;border-color:var(--cu)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px;perspective:1200px}
+.card{position:relative;background:linear-gradient(160deg,#21160f,#120c09);border:1px solid var(--line);border-radius:26px;padding:24px 24px 28px;overflow:hidden;transform-style:preserve-3d;transition:transform .25s ease-out,opacity .6s,border-color .4s;will-change:transform}
+.card:hover{border-color:rgba(224,146,77,.6)}
+.card.hide{display:none}
+.card .glare{position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,200,140,.22),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none;z-index:2}
+.card:hover .glare{opacity:1}
+.card .art{height:230px;display:grid;place-items:center;transform:translateZ(50px);transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.card:hover .art{transform:translateZ(80px) scale(1.06) rotate(-1.5deg)}
+.card .art img{height:100%;width:100%;object-fit:cover;object-position:center;border-radius:18px;display:block;box-shadow:0 18px 30px rgba(0,0,0,.55);animation:float 6s ease-in-out infinite;animation-delay:var(--fd,0s)}
+@keyframes float{50%{transform:translateY(-9px)}}
+.card small{color:var(--cu);letter-spacing:.25em;font-size:.65rem;text-transform:uppercase}
+.card h4{font:400 1.55rem var(--serif);margin:.5rem 0 .4rem;transform:translateZ(30px)}
+.card p{color:var(--mute);font-size:.88rem;line-height:1.55}
+.card .pop{position:absolute;top:18px;right:18px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--cu);color:var(--cu);padding:5px 10px;border-radius:99px;background:#120c09cc;backdrop-filter:blur(6px);z-index:3}
+
+/* workshop */
+.ws{display:grid;grid-template-columns:1.1fr 1fr;gap:6vw;align-items:center}
+@media(max-width:800px){.ws{grid-template-columns:1fr}}
+.ws p{color:var(--mute);line-height:1.8;max-width:46ch;margin:2rem 0}
+.rings{position:relative;aspect-ratio:1;max-width:480px;width:100%;margin:auto}
+.rings i{position:absolute;inset:0;border:1px solid var(--cu);border-radius:50%;opacity:0;animation:ring 5s infinite}
+.rings i:nth-child(2){animation-delay:1.2s}.rings i:nth-child(3){animation-delay:2.4s}.rings i:nth-child(4){animation-delay:3.6s}
+@keyframes ring{0%{transform:scale(.2);opacity:.9}100%{transform:scale(1);opacity:0}}
+.rings svg{position:absolute;inset:22%;width:56%}
+
+/* reviews */
+.revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:7vh}
+.rev{border:1px solid var(--line);border-radius:26px;padding:34px;background:#120c09;position:relative;overflow:hidden;transition:transform .5s,border-color .5s}
+.rev:hover{transform:translateY(-10px);border-color:var(--cu)}
+.rev .st{color:var(--cu);letter-spacing:.2em;margin-bottom:1.2rem}
+.rev p{font:300 italic 1.4rem/1.45 var(--serif)}
+.rev::after{content:"“";position:absolute;right:20px;top:-20px;font:300 9rem var(--serif);color:rgba(224,146,77,.1)}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:6vw;background:var(--bg2)}
+@media(max-width:800px){.visit{grid-template-columns:1fr}}
+.visit dl{margin-top:3rem}
+.visit dt{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cu);margin-top:2rem}
+.visit dd{font:300 1.5rem/1.4 var(--serif);margin-top:.5rem}
+.map{border:1px solid var(--line);border-radius:30px;min-height:420px;position:relative;overflow:hidden;background:#100a07}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;left:52%;top:46%;width:18px;height:18px;background:var(--cu);border-radius:50%}
+.pin::before,.pin::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--cu);animation:ping 2.4s infinite}
+.pin::after{animation-delay:1.2s}
+@keyframes ping{to{transform:scale(6);opacity:0}}
+.open{display:inline-flex;align-items:center;gap:10px;margin-top:1.5rem;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase}
+.open i{width:9px;height:9px;border-radius:50%;background:#6fd16f;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+footer{padding:8vh 5vw 5vh;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:2rem;color:var(--mute);font-size:.8rem}
+footer .big{font:300 clamp(3rem,13vw,12rem)/.85 var(--serif);color:var(--cream);width:100%;opacity:.9}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.01ms!important}.rv{opacity:1;transform:none}.hero h1 .ch{transform:none}.hero .sub{opacity:1;transform:none}}
+</style>
+</head>
+<body class="loading">
+
+<div id="loader"><div class="num" id="ln">0</div><small>Roasting the pixels</small><div class="bar" id="lb"></div></div>
+<div id="cur"></div><div id="prog"></div>
+
+<nav>
+  <a class="logo" href="#top">Prufrock<i>.</i> <span style="font-weight:300;font-size:.8rem;letter-spacing:.2em;opacity:.6">CONCEPT</span></a>
+  <ul><li><a href="#menu">Menu</a></li><li><a href="#craft">Craft</a></li><li><a href="#workshops">Workshops</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#visit">Visit</a></li></ul>
+</nav>
+
+<header class="hero" id="top">
+  <div id="beans"></div>
+  <div class="wrap">
+    <h1 id="h1"><span class="row">Coffee,</span><span class="row">expertly</span><span class="row">poured.</span></h1>
+    <p class="sub">A buzzy open-plan café on Leather Lane where trained baristas turn bespoke brews into a small daily ritual.</p>
+  </div>
+  <div class="cupwrap" id="heroCup"></div>
+  <div class="badge"><svg viewBox="0 0 120 120"><defs><path id="c" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text fill="#f3e9dc" font-size="11.5" letter-spacing="3.2" font-family="Inter"><textPath href="#c">• 4.6 RATED • 2,779 REVIEWS • LONDON EC1 </textPath></text></svg><b>4.6</b></div>
+  <div class="scrollhint">Scroll <i></i></div>
+</header>
+
+<div class="marq"><div id="mq"></div></div>
+
+<section class="pad" id="about">
+  <div class="eyebrow rv">Leather Lane · London</div>
+  <h2 class="rv" style="--d:.1s">Simple food. <em>Serious</em> coffee.<br>A room that hums.</h2>
+  <div class="stats">
+    <div class="stat rv"><b data-n="4.6" data-dec="1">0</b><span>Google rating</span></div>
+    <div class="stat rv" style="--d:.1s"><b data-n="2779">0</b><span>Reviews</span></div>
+    <div class="stat rv" style="--d:.2s"><b data-n="20">0</b><span>Menu favourites</span></div>
+    <div class="stat rv" style="--d:.3s"><b>£10–20</b><span>Per person</span></div>
+  </div>
+</section>
+
+<section class="story" id="craft">
+  <div class="stick">
+    <div class="glass">
+      <svg viewBox="0 0 200 300">
+        <defs><clipPath id="gc"><path d="M40 40 H160 L146 262 Q144 280 126 280 H74 Q56 280 54 262 Z"/></clipPath>
+        <linearGradient id="cof" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8a4a22"/><stop offset="1" stop-color="#2a130a"/></linearGradient></defs>
+        <g clip-path="url(#gc)"><rect id="fill" x="30" y="280" width="140" height="260" fill="url(#cof)"/>
+        <ellipse id="crema" cx="100" cy="280" rx="62" ry="6" fill="#d9a36a" opacity=".9"/></g>
+        <path d="M40 40 H160 L146 262 Q144 280 126 280 H74 Q56 280 54 262 Z" fill="rgba(255,255,255,.05)" stroke="rgba(255,240,220,.6)" stroke-width="2.5"/>
+        <path d="M58 60 L66 250" stroke="rgba(255,255,255,.35)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="steps" id="steps">
+      <div class="stp on"><b>01</b><h3>Roast &amp; choose</h3><p>Speciality beans, selected with care. Espresso, filter or pour over — the menu starts with the cup you want.</p></div>
+      <div class="stp"><b>02</b><h3>Grind &amp; dial in</h3><p>Trained baristas tune every shot. Downstairs, the same craft is taught in coffee workshops and barista training.</p></div>
+      <div class="stp"><b>03</b><h3>Pour &amp; serve</h3><p>Flat white, cortado, long black or cold brew — handed over across a minimal, open-plan bar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="menu">
+  <div class="eyebrow rv">The menu</div>
+  <h2 class="rv">Every cup. <em>Every plate.</em></h2>
+  <div class="tabs rv" id="tabs">
+    <button class="tab on" data-f="all">All</button><button class="tab" data-f="Coffee">Coffee</button><button class="tab" data-f="Cold &amp; Sweet">Cold &amp; Sweet</button><button class="tab" data-f="Bakes">Bakes</button><button class="tab" data-f="Kitchen">Kitchen</button>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="pad" id="workshops">
+  <div class="ws">
+    <div>
+      <div class="eyebrow rv">Downstairs</div>
+      <h2 class="rv">Where baristas are <em>made.</em></h2>
+      <p class="rv">Beneath the café floor, coffee workshops and barista trainings run — a quiet counterpoint to the buzz above.</p>
+      <a class="mag rv" href="#visit"><span>Find us →</span></a>
+    </div>
+    <div class="rings rv"><i></i><i></i><i></i><i></i><div id="wsCup"></div></div>
+  </div>
+</section>
+
+<section class="pad" id="reviews" style="background:var(--bg2)">
+  <div class="eyebrow rv">What people say</div>
+  <h2 class="rv">4.6 stars from <em>2,779</em> guests</h2>
+  <div class="revs">
+    <div class="rev rv"><div class="st">★★★★★</div><p>Delicious food and friendly service — though the music can run a little loud.</p></div>
+    <div class="rev rv" style="--d:.12s"><div class="st">★★★★★</div><p>A short, tasty menu with a lovely spread of cakes and pastries.</p></div>
+    <div class="rev rv" style="--d:.24s"><div class="st">★★★★★</div><p>Downstairs is home to coffee workshops and barista training.</p></div>
+  </div>
+</section>
+
+<section class="pad visit" id="visit">
+  <div>
+    <div class="eyebrow rv">Visit</div>
+    <h2 class="rv">Come in for <em>one.</em></h2>
+    <div class="open rv"><i></i> Today until 4:30 pm · Opens 7:30 am Thu</div>
+    <dl class="rv">
+      <dt>Address</dt><dd>23–25 Leather Ln, London EC1N 7TE</dd>
+      <dt>Call</dt><dd>+44 20 7242 0467</dd>
+      <dt>Online</dt><dd>prufrockcoffee.com</dd>
+    </dl>
+    <div style="margin-top:3rem;display:flex;gap:1rem;flex-wrap:wrap" class="rv">
+      <a class="mag" href="https://www.google.com/maps/search/?api=1&query=Prufrock+Coffee+23-25+Leather+Ln+London" target="_blank" rel="noopener"><span>Directions</span></a>
+      <a class="mag" href="tel:+442072420467"><span>Call</span></a>
+    </div>
+  </div>
+  <div class="map rv">
+    <svg viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice"><g stroke="#3b2a1d" fill="none" stroke-width="1.5"><path d="M-10 300 L420 140"/><path d="M60 -10 L240 430"/><path d="M-10 90 L420 250"/><path d="M300 -10 L180 430"/><path d="M-10 200 Q200 160 420 210"/><path d="M120 -10 Q160 200 100 430"/></g><path d="M210 195 L270 175" stroke="#e0924d" stroke-width="3"/></svg>
+    <div class="pin"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="big">Prufrock.</div>
+  <span>Unofficial motion concept — not affiliated with Prufrock Coffee.</span>
+  <span>Product photography supplied by the client.</span>
+</footer>
+
+<script>
+/* ---------- SVG illustration kit (still used by the hero + workshop cup) ---------- */
+const S=(inner,vb='0 0 200 200')=>`<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+const steam=(y=60)=>`<g class="steam" transform="translate(0,${y-60})"><path d="M82 62 q-10 -14 0 -26 q10 -12 0 -24"/><path d="M104 60 q-10 -14 0 -26 q10 -12 0 -24"/><path d="M126 62 q-10 -14 0 -26 q10 -12 0 -24"/></g>`;
+const shadow=`<ellipse cx="100" cy="168" rx="74" ry="10" fill="#000" opacity=".4"/>`;
+function cup({liq='#5a2e14',art='',sc=1,steamOn=true,w=1}={}){
+  const arts={
+    heart:`<path d="M100 88 c-18 -14 -30 4 0 14 c30 -10 18 -28 0 -14z" fill="#f2dcc0" opacity=".95" transform="translate(0,-4)"/>`,
+    rosetta:`<g fill="none" stroke="#f2dcc0" stroke-width="4" stroke-linecap="round" opacity=".95"><path d="M100 76 V102"/><path d="M80 82 Q100 90 120 82"/><path d="M76 90 Q100 98 124 90"/><path d="M82 98 Q100 104 118 98"/></g>`,
+    foam:`<ellipse cx="100" cy="82" rx="44" ry="8" fill="#f2dcc0"/><ellipse cx="100" cy="80" rx="30" ry="5" fill="#fff3df" opacity=".8"/><circle cx="92" cy="80" r="1.5" fill="#c9a077"/><circle cx="112" cy="82" r="1.5" fill="#c9a077"/>`,
+    crema:`<ellipse cx="100" cy="82" rx="42" ry="7" fill="#c78a4c" opacity=".85"/>`,
+    '':''};
+  return `<g transform="translate(${100-100*sc},${100-100*sc+ (1-sc)*80}) scale(${sc})">${shadow}
+    <ellipse cx="100" cy="152" rx="66" ry="13" fill="#e7dccb"/><ellipse cx="100" cy="150" rx="52" ry="9" fill="#f6efe4"/>
+    <path d="M150 94 C180 90 178 130 146 128" fill="none" stroke="#f6efe4" stroke-width="9" stroke-linecap="round"/>
+    <path d="M52 80 H148 V108 C148 138 128 152 100 152 C72 152 52 138 52 108 Z" fill="#f6efe4"/>
+    <path d="M60 84 V108 C60 128 72 142 90 148" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="100" cy="80" rx="48" ry="10" fill="#e9dfcf"/><ellipse cx="100" cy="82" rx="44" ry="8" fill="${liq}"/>${arts[art]}
+    ${steamOn?steam(60):''}</g>`;
+}
+
+/* ---------- product photos, in the order supplied ---------- */
+const PHOTOS=[
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/19e09e2a-3e25-46a4-a208-a48af2f7c351.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/818beeb3-b1f0-4f51-b385-e9b44d8a7463.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/ef71d399-19cc-4e55-963e-8191c9e0c996.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/5817dd0d-d0aa-4223-a473-0ed6c72730a3.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/645e07a5-5cd4-4d79-b4d7-92debb65e71c.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/0101b12e-0fae-4328-9de9-74e4ffb91012.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/7fbd047e-12f0-44ef-91df-88a9c0449c40.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/e0d54876-e5ac-4390-90af-4fcd4c60517c.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/deebafc3-80a7-4eab-bd34-cab70561e51b.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/0825ee26-78fc-4987-b051-2e3cc73e3304.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/76bfcee3-f527-44c4-9635-181c63338753.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/729c2e02-43b3-418d-b0b8-594ed6956d97.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/9c9532d0-ae1f-4335-a3fb-8644682d2d63.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/be8b7449-2ec9-4ceb-9df3-d823331806d8.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/c982b9bc-e55c-4d76-8dc3-950b615d8695.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/f0098ae6-4901-496b-97da-9618eb8f69e8.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/8f7b6b34-91a0-4275-870f-08f7c6335223.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/db732134-3fc3-483b-862c-1a403fba78ed.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/f391a7ab-fc81-4b8c-a4f5-aa37d5b0b154.jpeg',
+ 'https://cdn-chatly-docs.vyro.ai/chatly/ultra-agent/uploads/5dbf9b52-bfaa-4e75-94a0-03cee83057f1/75ab8ea9-720b-4ec3-a022-7c91028dec47.jpeg'
+];
+
+/* ---------- menu data ---------- */
+const MENU=[
+ ['Espresso','Coffee','A short, intense shot pulled with care.','espresso',1],
+ ['Flat White','Coffee','Silky microfoam over a double shot.','flatwhite',1],
+ ['Cappuccino','Coffee','Balanced espresso, steamed milk and a cloud of foam.','cappuccino',1],
+ ['Cortado','Coffee','Equal parts espresso and warm milk, small and smooth.','cortado'],
+ ['Long Black','Coffee','Espresso over hot water, crema kept intact.','longblack'],
+ ['Filter Coffee','Coffee','Clean, bright, batch-brewed and easy to sip.','filter',1],
+ ['Pour Over','Coffee','Hand-poured, slow and delicate — made to order.','pourover'],
+ ['Speciality Coffee','Coffee','Rotating beans, brewed by trained baristas.','speciality'],
+ ['Cold Brew','Cold & Sweet','Steeped slowly and served over ice.','coldbrew',1],
+ ['Affogato','Cold & Sweet','Vanilla scoop drowned in hot espresso.','affogato'],
+ ['Juice','Cold & Sweet','Fresh, cold and citrus-bright.','juice'],
+ ['Almond Croissant','Bakes','Flaky layers, almond finish and a dusting of sugar.','almondcroissant',1],
+ ['Pain au Raisin Toast','Bakes','Spiralled pastry with plump raisins, toasted.','painraisin'],
+ ['Hazelnut Chocolatine','Bakes','Buttery pastry wrapped around chocolate and hazelnut.','chocolatine'],
+ ['Toasted Banana Bread','Bakes','Warm banana bread with a melting pat of butter.','bananabread'],
+ ['Pastries','Bakes','A rotating counter of cakes and pastries.','pastries',1],
+ ['Eggs Benedict','Kitchen','Poached eggs, ham and hollandaise on a toasted muffin.','benedict',1],
+ ['Mushroom Toast','Kitchen','Savoury mushrooms and herbs piled on toast.','mushroom'],
+ ['Tomatoes on Toast','Kitchen','Ripe tomatoes on crisp toast. Simple and good.','tomatoes'],
+ ['Sourdough with Jam','Kitchen','Thick sourdough, butter and a sweet jam spread.','sourdough'],
+];
+
+const grid=document.getElementById('grid');
+grid.innerHTML=MENU.map((m,i)=>`<article class="card rv" data-cat="${m[1]}" style="--d:${(i%4)*.08}s;--fd:${-(i%5)}s"><div class="glare"></div>${m[4]?'<span class="pop">Popular</span>':''}<div class="art"><img src="${PHOTOS[i]}" alt="${m[0]}" loading="lazy"></div><small>${m[1]}</small><h4>${m[0]}</h4><p>${m[2]}</p></article>`).join('');
+
+/* ---------- hero art ---------- */
+document.getElementById('heroCup').innerHTML=S(cup({liq:'#6d3a1b',art:'rosetta'}));
+document.getElementById('wsCup').innerHTML=S(cup({liq:'#5a2e14',art:'heart',steamOn:true}));
+document.getElementById('mq').innerHTML=[...Array(2)].map(()=>MENU.map(m=>`<span>${m[0]}</span>`).join('')).join('');
+const beans=document.getElementById('beans');
+for(let i=0;i<14;i++){const b=document.createElement('div');b.className='bean';const s=10+Math.random()*16;
+ b.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s*.66}px;background:#4a2512;border-radius:50%;animation-duration:${14+Math.random()*16}s;animation-delay:${-Math.random()*20}s;opacity:${.25+Math.random()*.5}`;
+ b.innerHTML=`<svg viewBox="0 0 20 13" style="width:100%;height:100%"><path d="M2 7 Q10 3 18 6" stroke="#1d0d06" stroke-width="1.4" fill="none"/></svg>`;beans.appendChild(b)}
+
+/* split headline */
+let idx=0;document.querySelectorAll('#h1 .row').forEach(r=>{const t=r.textContent;r.innerHTML=[...t].map(c=>`<span class="ch" style="--i:${idx++}">${c===' '?'&nbsp;':c}</span>`).join('')});
+
+/* loader */
+const ln=document.getElementById('ln'),lb=document.getElementById('lb');let n=0;
+const t=setInterval(()=>{n+=Math.ceil(Math.random()*7);if(n>=100){n=100;clearInterval(t);setTimeout(()=>{document.getElementById('loader').classList.add('done');document.body.classList.remove('loading');document.body.classList.add('ready')},350)}ln.textContent=n;lb.style.width=n+'%'},45);
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+/* counters */
+const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;co.unobserve(e.target);const el=e.target,end=+el.dataset.n,dec=+(el.dataset.dec||0),t0=performance.now();
+ (function f(t){const p=Math.min((t-t0)/1800,1),v=end*(1-Math.pow(1-p,4));el.textContent=dec?v.toFixed(dec):Math.round(v).toLocaleString();if(p<1)requestAnimationFrame(f)})(t0)}),{threshold:.6});
+document.querySelectorAll('[data-n]').forEach(el=>co.observe(el));
+
+/* cursor */
+const cur=document.getElementById('cur');let cx=0,cy=0,tx=0,ty=0;
+addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+(function loop(){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,.tab,.card,.mag').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('big'));el.addEventListener('mouseleave',()=>cur.classList.remove('big'))});
+
+/* magnetic buttons */
+document.querySelectorAll('.mag').forEach(b=>{b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.25}px,${(e.clientY-r.top-r.height/2)*.35}px)`});b.addEventListener('mouseleave',()=>b.style.transform='')});
+
+/* 3D tilt cards */
+document.querySelectorAll('.card').forEach(c=>{
+ c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  c.style.transform=`rotateY(${(x-.5)*16}deg) rotateX(${(.5-y)*16}deg) translateY(-6px)`;c.style.setProperty('--gx',x*100+'%');c.style.setProperty('--gy',y*100+'%')});
+ c.addEventListener('mouseleave',()=>c.style.transform='')});
+
+/* tabs */
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;
+ document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
+ const f=b.dataset.f;let k=0;document.querySelectorAll('.card').forEach(c=>{const show=f==='all'||c.dataset.cat===f;c.classList.toggle('hide',!show);
+  if(show){c.classList.remove('in');void c.offsetWidth;c.style.setProperty('--d',(k++*.06)+'s');requestAnimationFrame(()=>c.classList.add('in'))}})});
+
+/* scroll: progress bar, hero parallax, pour story */
+const prog=document.getElementById('prog'),story=document.querySelector('.story'),fill=document.getElementById('fill'),crema=document.getElementById('crema'),stps=[...document.querySelectorAll('.stp')],hc=document.getElementById('heroCup');
+function onScroll(){
+ const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(scrollY/h*100)+'%';
+ hc.style.translate=`0 ${scrollY*.12}px`;
+ const r=story.getBoundingClientRect(),p=Math.min(Math.max(-r.top/(r.height-innerHeight),0),1);
+ const y=280-p*240;fill.setAttribute('y',y);crema.setAttribute('cy',y);
+ const i=Math.min(2,Math.floor(p*3));stps.forEach((s,j)=>s.classList.toggle('on',j===i));
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+/* hero mouse parallax */
+document.querySelector('.hero').addEventListener('mousemove',e=>{const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);hc.style.transform=`translateY(-46%) translate(${x*-30}px,${y*-20}px)`});
+</script>
+</body>
+</html>
