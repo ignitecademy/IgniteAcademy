@@ -3,207 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ignite Academy: concept redesign</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=DM+Sans:wght@400;500;700&display=swap">
+<title>Ignite Academy: concept v3</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Caveat:wght@600&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#f4f6f3;--surface:#fff;--ink:#12201a;--muted:#52665b;--line:#d3ddd6;--spark:#f2a900;--sparkink:#2b1d00;--wa:#0b7a4b;--waink:#fff;--bubble:#dff3e6;--night:#0b1511;--night2:#12261d;--hdr:#0b1511;
+:root{--bg:#f6f8fc;--grid:#dde5f3;--card:#fff;--ink:#101a3a;--mut:#4d5a7c;--pri:#3b34e0;--prik:#fff;--red:#e5322d;--hi:#ffe14a;--ok:#0b7a4b;--line:#cdd7ec;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1612;--surface:#17241d;--ink:#eef4ef;--muted:#a5b7ac;--line:#2b3c33;--wa:#2fbf7f;--waink:#06150e;--bubble:#1c3a2b;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e1612;--surface:#17241d;--ink:#eef4ef;--muted:#a5b7ac;--line:#2b3c33;--wa:#2fbf7f;--waink:#06150e;--bubble:#1c3a2b;color-scheme:dark}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1226;--grid:#1b2444;--card:#151c38;--ink:#eaf0ff;--mut:#a3b0d6;--pri:#8f8bff;--prik:#10133a;--red:#ff6a64;--ok:#3fd18f;--line:#2a3560;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1226;--grid:#1b2444;--card:#151c38;--ink:#eaf0ff;--mut:#a3b0d6;--pri:#8f8bff;--prik:#10133a;--red:#ff6a64;--ok:#3fd18f;--line:#2a3560;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hdr);z-index:30}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;line-height:1.08;letter-spacing:-.01em}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--hdr);color:#eef4ef;display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
-.brand{display:flex;align-items:center;gap:10px;font:900 20px Fraunces,Georgia,serif}
-.brand svg{width:26px;height:26px}
-.nbtn{background:var(--spark);color:var(--sparkink);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:999px;min-height:44px;display:inline-flex;align-items:center}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;color:var(--ink);font:400 16px/1.6 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background-color:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;overflow-x:hidden;padding-bottom:84px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:40}
+h1,h2,h3{font-family:"Bricolage Grotesque",Georgia,sans-serif;margin:0;line-height:1.05;letter-spacing:-.02em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:2px solid var(--ink)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif}.logo i{font-style:normal;background:var(--pri);color:var(--prik);padding:0 6px;border-radius:4px;margin-right:6px}
+.tg{background:none;border:2px solid var(--ink);color:var(--ink);border-radius:999px;min-height:44px;padding:0 14px;font:700 14px inherit;cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--red);outline-offset:2px}
 /* hero */
-.hero{position:relative;background:radial-gradient(900px 500px at 75% 30%,#1d4a36 0,transparent 60%),radial-gradient(600px 400px at 10% 90%,#3b2a05 0,transparent 60%),var(--night);color:#eef4ef;overflow:hidden}
-.hero .in{max-width:1080px;margin:0 auto;padding:48px 20px 64px;display:grid;gap:32px;align-items:center}
-@media(min-width:860px){.hero .in{grid-template-columns:1.05fr .95fr;padding:80px 20px 96px}}
-h1{font-size:clamp(38px,8vw,68px);font-weight:900}
-h1 .w{display:inline-block;opacity:0;transform:translateY(.7em) rotate(3deg);animation:rise .8s cubic-bezier(.2,.9,.2,1) forwards}
-.sub{color:#b9ccc0;max-width:46ch;margin:18px 0 26px;font-size:18px;opacity:0;animation:fade .8s 1.1s forwards}
-.cta{display:flex;flex-wrap:wrap;gap:12px;opacity:0;animation:fade .8s 1.3s forwards}
-.b1,.b2{font-weight:700;text-decoration:none;padding:14px 22px;border-radius:12px;min-height:48px;display:inline-flex;align-items:center}
-.b1{background:var(--spark);color:var(--sparkink);box-shadow:0 0 0 0 #f2a90088;animation:pulse 2.4s 2.2s infinite}
-.b2{border:1.5px solid #ffffff55;color:#eef4ef}
-.art{position:relative;width:min(100%,420px);aspect-ratio:1;margin:0 auto}
-.art svg{width:100%;height:100%;overflow:visible}
-.flame{stroke-dasharray:700;stroke-dashoffset:700;animation:draw 1.8s .3s ease-out forwards,flick 3s 2.1s ease-in-out infinite;transform-origin:100px 190px}
-.fill{opacity:0;animation:fade 1s 1.6s forwards}
-.orbit{transform-origin:200px 200px;animation:spin 40s linear infinite}
-.orbit g{transform-box:fill-box;transform-origin:center;animation:spin 40s linear infinite reverse}
-.node{fill:#12261d;stroke:#f2a900;stroke-width:1.5}
-.nt{fill:#f2b51f;font:700 13px "DM Sans",sans-serif;text-anchor:middle;dominant-baseline:central}
-.ring{fill:none;stroke:#ffffff22;stroke-dasharray:3 7}
-.sp{position:absolute;bottom:-10px;width:5px;height:5px;border-radius:50%;background:#f2b51f;opacity:0;animation:float linear infinite}
-@keyframes rise{to{opacity:1;transform:none}}
-@keyframes fade{to{opacity:1}}
-@keyframes draw{to{stroke-dashoffset:0}}
-@keyframes flick{50%{transform:scale(1.03,1.06) skewX(-1.5deg)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes pulse{70%{box-shadow:0 0 0 16px #f2a90000}100%{box-shadow:0 0 0 0 #f2a90000}}
-@keyframes float{0%{opacity:0;transform:translateY(0)}15%{opacity:.9}100%{opacity:0;transform:translateY(-110vh) translateX(30px)}}
-/* marquee */
-.mq{background:var(--spark);color:var(--sparkink);overflow:hidden;white-space:nowrap;font:700 18px Fraunces,Georgia,serif;padding:12px 0}
-.mq div{display:inline-block;animation:slide 28s linear infinite}
-.mq span{margin:0 22px}
-@keyframes slide{to{transform:translateX(-50%)}}
+.hero{display:grid;gap:36px;padding:48px 0 56px;align-items:center}
+@media(min-width:860px){.hero{grid-template-columns:1.1fr .9fr;padding:80px 0}}
+h1{font-size:clamp(40px,9vw,76px);font-weight:800}
+.sq{display:block;width:min(100%,360px);height:22px;margin-top:6px}
+.sq path{fill:none;stroke:var(--red);stroke-width:5;stroke-linecap:round;stroke-dasharray:420;stroke-dashoffset:420;animation:dr 1.2s .9s ease-out forwards}
+.lede{font-size:18px;color:var(--mut);max-width:46ch;margin:20px 0 26px}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 24px;border-radius:12px;font-weight:700;text-decoration:none;border:2px solid var(--ink);cursor:pointer;font-size:16px;font-family:inherit}
+.bp{background:var(--pri);color:var(--prik);box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.bp:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.bp:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.bg{background:transparent;color:var(--ink);margin-left:10px}
+.paper{position:relative;background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:26px 22px;box-shadow:8px 8px 0 var(--ink)}
+.paper h3{font-size:22px;margin-bottom:14px}
+.ck{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1.5px dashed var(--line);font-weight:500}
+.ck svg{width:30px;height:30px;flex:none}
+.ck path{fill:none;stroke:var(--red);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:dr .5s ease-out forwards}
+.ck:nth-of-type(2) path{animation-delay:1.3s}.ck:nth-of-type(3) path{animation-delay:1.8s}.ck:nth-of-type(4) path{animation-delay:2.3s}.ck:nth-of-type(5) path{animation-delay:2.8s}
+.stamp{position:absolute;right:-6px;top:-34px;width:96px;height:96px;border-radius:50%;border:5px solid var(--red);color:var(--red);display:grid;place-items:center;font:800 40px "Bricolage Grotesque",sans-serif;background:var(--bg);transform:rotate(-10deg);opacity:0;animation:st .6s 3.3s cubic-bezier(.3,1.6,.5,1) forwards}
+.stamp small{position:absolute;bottom:14px;font:600 13px Caveat,cursive}
+.note{font:600 20px Caveat,cursive;color:var(--red);margin-top:12px}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes st{0%{transform:scale(3) rotate(-24deg);opacity:0}100%{transform:scale(1) rotate(-10deg);opacity:1}}
 /* sections */
-section{max-width:1080px;margin:0 auto;padding:64px 20px}
-h2{font-size:clamp(28px,5vw,42px);margin-bottom:12px}
-.lead{color:var(--muted);max-width:56ch;margin:0 0 32px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:8px}
-.stat{border-left:3px solid var(--spark);padding-left:14px}
-.stat b{display:block;font:900 clamp(34px,7vw,54px)/1 Fraunces,Georgia,serif}
-.stat span{color:var(--muted);font-size:14px}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;transform-style:preserve-3d;transition:transform .15s,box-shadow .2s}
-.card:hover{box-shadow:0 14px 30px #00000022}
-.ic{width:52px;height:52px;border-radius:14px;background:var(--night2);color:#f2b51f;display:grid;place-items:center;font:700 17px "DM Sans";margin-bottom:14px}
-.card h3{font-size:22px;margin-bottom:4px}
-.card p{margin:0;color:var(--muted);font-size:15px}
-.fac{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
-.p{flex:0 0 240px;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
-.av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font:900 24px Fraunces,Georgia,serif;color:var(--sparkink);margin-bottom:12px;background:conic-gradient(from 200deg,#f2a900,#ffd36b,#f2a900)}
-.p b{display:block;font-size:17px}.p span{color:var(--muted);font-size:14px}
-.rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}.rv.on{opacity:1;transform:none}
-/* enquire */
-.enq{display:grid;gap:28px}
-@media(min-width:860px){.enq{grid-template-columns:1fr 1fr;align-items:start}}
-form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
-fieldset{border:0;margin:0 0 18px;padding:0}
-legend,.t{font-weight:700;font-size:15px;margin:0 0 8px;display:block;padding:0}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:inherit;color:var(--ink);background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px;transition:background .15s,transform .15s}
-.chip:active{transform:scale(.94)}
-.chip[aria-pressed="true"]{background:var(--spark);border-color:var(--spark);color:var(--sparkink);font-weight:700}
-.chip:focus-visible,input:focus-visible,.go:focus-visible,a:focus-visible{outline:3px solid #f2b51f;outline-offset:2px}
-input[type=text]{font:inherit;width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);min-height:44px}
-.bubble{background:var(--bubble);border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:15px;margin:0 0 16px;white-space:pre-wrap;min-height:72px}
-.go{display:block;text-align:center;text-decoration:none;font-weight:700;background:var(--wa);color:var(--waink);padding:14px;border-radius:12px;min-height:48px}
-.go[aria-disabled="true"]{opacity:.45;pointer-events:none}
-.hint{font-size:14px;color:var(--muted);margin:10px 0 0}
-.note{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding:16px 20px 40px;max-width:1080px;margin:0 auto}
-.fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:56px;height:56px;border-radius:50%;background:var(--wa);color:var(--waink);display:grid;place-items:center;text-decoration:none;font-weight:900;box-shadow:0 8px 20px #0006}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition:none!important;scroll-behavior:auto!important}h1 .w,.sub,.cta,.fill,.rv{opacity:1;transform:none}.flame{stroke-dashoffset:0}.sp{display:none}}
+section{padding:56px 0}
+h2{font-size:clamp(30px,6vw,46px);margin-bottom:10px;font-weight:800}
+h2::after{content:attr(data-n);display:block;font:600 22px Caveat,cursive;color:var(--red);margin-top:6px}
+.lead{color:var(--mut);max-width:58ch;margin:0 0 28px}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.rv.on{opacity:1;transform:none}
+/* planner */
+.pl{display:grid;gap:22px}
+@media(min-width:900px){.pl{grid-template-columns:1.15fr .85fr;align-items:start}}
+.step{margin-bottom:22px}
+.step h3{font:700 17px "DM Sans",sans-serif;margin:0 0 4px;letter-spacing:0}
+.step p{margin:0 0 10px;color:var(--mut);font-size:14px}
+.ch{display:flex;flex-wrap:wrap;gap:8px}
+.c{font:500 15px "DM Sans",sans-serif;color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:999px;padding:0 15px;min-height:44px;cursor:pointer;transition:transform .1s}
+.c:active{transform:scale(.94)}
+.c[aria-pressed="true"]{background:var(--pri);color:var(--prik);font-weight:700}
+.pre{border-style:dashed}
+input[type=text]{font:inherit;width:100%;min-height:46px;padding:0 14px;border-radius:10px;border:2px solid var(--ink);background:var(--card);color:var(--ink)}
+.side{position:relative}
+.bar{height:12px;border:2px solid var(--ink);border-radius:99px;overflow:hidden;margin:6px 0 14px;background:var(--bg)}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .4s}
+.tch{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px}
+.tch span{background:var(--card);color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:2px 11px;font-weight:700;font-size:14px}
+.warn{background:#ffe5e3;color:#7a1410;border-left:4px solid var(--red);padding:8px 12px;border-radius:6px;font-size:14px;margin:0 0 8px}
+:root[data-theme="dark"] .warn{background:#3a1717;color:#ffd0cd}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .warn{background:#3a1717;color:#ffd0cd}}
+.msg{background:var(--bg);border:2px solid var(--ink);border-radius:14px 14px 14px 3px;padding:12px 14px;font-size:14px;white-space:pre-wrap;margin:0 0 14px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row .btn{flex:1;justify-content:center;min-width:130px}
+.go{text-align:center}
+.sv{font-size:13px;color:var(--mut);margin:10px 0 0}
+/* teachers */
+.tg3{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.tc{background:var(--card);border:2px solid var(--ink);border-radius:14px;padding:18px}
+.tc b{font:800 19px "Bricolage Grotesque",sans-serif;display:block}.tc span{display:block;color:var(--mut);font-size:14px;margin-bottom:12px}
+.tc a{font-weight:700;color:var(--pri);font-size:14px;display:inline-block;padding:10px 0;min-height:44px}
+details{background:var(--card);border:2px solid var(--ink);border-radius:12px;margin-bottom:10px;padding:0 16px}
+summary{font-weight:700;cursor:pointer;min-height:52px;display:flex;align-items:center}
+details p{margin:0 0 14px;color:var(--mut)}
+.ct{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.ct a{background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:14px 16px;text-decoration:none;color:var(--ink);font-weight:700;display:block;min-height:48px}
+.ct small{display:block;color:var(--mut);font-weight:400}
+.dis{font-size:13px;color:var(--mut);padding:24px 0 8px;border-top:2px solid var(--ink)}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--bg);border-top:2px solid var(--ink);display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px))}
+.dock a{flex:1;text-align:center;text-decoration:none;font-weight:700;color:var(--ink);border:2px solid var(--ink);border-radius:10px;min-height:48px;display:grid;place-items:center;background:var(--card)}
+.dock a.m{background:var(--pri);color:var(--prik)}
+@media(min-width:900px){.dock{display:none}body{padding-bottom:0}.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important;scroll-behavior:auto!important}.sq path,.ck path{stroke-dashoffset:0}.stamp{opacity:1}.rv{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<header>
-<div class="brand"><svg viewBox="0 0 200 200" aria-hidden="true"><path d="M100 10C130 60 170 80 160 135c-5 40-35 60-60 60s-60-20-58-60c2-35 28-45 36-75 12 15 17-20 22-50z" fill="#f2a900"/></svg>Ignite Academy</div>
-<a class="nbtn" href="#enquire">Enquire</a>
-</header>
-
+<header><div class="wrap"><div class="logo"><i>IA</i>Ignite Academy</div><button class="tg" id="th" type="button">Theme</button></div></header>
+<main class="wrap">
 <div class="hero">
-<div class="in">
 <div>
-<h1 id="h1">Ignite the spark of excellence.</h1>
-<p class="sub">Cambridge O Level, IGCSE and A Level coaching in Karachi. Small batches, experienced teachers, in DHA or online.</p>
-<div class="cta"><a class="b1" href="#enquire">Book a free consultation</a><a class="b2" href="#subjects">See subjects</a></div>
+<h1>Study smarter. Score higher.<svg class="sq" viewBox="0 0 360 22" preserveAspectRatio="none" aria-hidden="true"><path d="M4 14C30 2 50 22 80 11s50 11 80 0 50 11 80 0 50 11 80 0 40 8 56 3"/></svg></h1>
+<p class="lede">Cambridge O Level, IGCSE and A Level coaching in Karachi. Build your subject combo, see which teachers cover it, and send one clear enquiry on WhatsApp.</p>
+<a class="btn bp" href="#plan">Build my combo</a><a class="btn bg" href="#teachers">Meet the teachers</a>
 </div>
-<div class="art" id="art">
-<svg viewBox="0 0 400 400" role="img" aria-label="A flame surrounded by orbiting subject badges">
-<circle class="ring" cx="200" cy="200" r="150"/><circle class="ring" cx="200" cy="200" r="110"/>
-<g transform="translate(100 95)">
-<path class="flame" d="M100 10C130 60 170 80 160 135c-5 40-35 60-60 60s-60-20-58-60c2-35 28-45 36-75 12 15 17-20 22-50z" fill="none" stroke="#f2b51f" stroke-width="3" stroke-linejoin="round"/>
-<path class="fill" d="M100 10C130 60 170 80 160 135c-5 40-35 60-60 60s-60-20-58-60c2-35 28-45 36-75 12 15 17-20 22-50z" fill="#f2a900" opacity=".9"/>
-<path class="fill" d="M100 85c20 30 40 45 34 80-3 20-17 30-34 30s-31-10-34-30c-4-30 16-45 34-80z" fill="#ffe08a"/>
-</g>
-<g class="orbit" id="orb"></g>
-</svg>
-</div>
+<div class="paper">
+<div class="stamp">A*<small>target</small></div>
+<h3>How classes run</h3>
+<div class="ck"><svg viewBox="0 0 30 30"><path d="M5 16l7 7L26 6"/></svg>Past-paper-driven preparation</div>
+<div class="ck"><svg viewBox="0 0 30 30"><path d="M5 16l7 7L26 6"/></svg>Small batches, individual feedback</div>
+<div class="ck"><svg viewBox="0 0 30 30"><path d="M5 16l7 7L26 6"/></svg>Regular tests and progress reports</div>
+<div class="ck"><svg viewBox="0 0 30 30"><path d="M5 16l7 7L26 6"/></svg>Doubt-clearing outside class hours</div>
+<div class="note">Online or on campus in DHA Phase 6</div>
 </div>
 </div>
 
-<div class="mq" aria-hidden="true"><div id="mq"></div></div>
-
-<section id="why">
-<h2 class="rv">Small batches. Real results.</h2>
-<p class="lead rv">Past-paper-driven preparation, regular tests with progress reports, and doubt-clearing sessions outside class hours.</p>
-<div class="stats rv">
-<div class="stat"><b data-n="5">0</b><span>Expert teachers</span></div>
-<div class="stat"><b data-n="6">0</b><span>Subjects</span></div>
-<div class="stat"><b data-n="48" data-s="+">0</b><span>Years combined</span></div>
+<section id="plan">
+<h2 class="rv" data-n="Start here, it takes a minute">Build your combo</h2>
+<p class="lead rv">Answer four quick steps. The plan on the right updates as you go and writes your message for you.</p>
+<div class="pl">
+<div class="rv">
+<div class="step"><h3>1. Level</h3><div class="ch" id="lvl"></div></div>
+<div class="step"><h3>2. Subjects</h3><p>Tap a ready-made combo or pick your own.</p><div class="ch" id="pre" style="margin-bottom:10px"></div><div class="ch" id="sub"></div></div>
+<div class="step"><h3>3. Class mode</h3><div class="ch" id="mod"></div></div>
+<div class="step"><h3>4. Preferences</h3><p>Days and time of day that suit you best. These are preferences, the academy confirms the real timetable.</p><div class="ch" id="day" style="margin-bottom:8px"></div><div class="ch" id="tod" style="margin-bottom:12px"></div><div class="ch" id="dm"></div></div>
+<div class="step"><h3>Student’s name (optional)</h3><input id="nm" type="text" placeholder="e.g. Ayaan" autocomplete="off"></div>
+</div>
+<aside class="paper side rv">
+<h3>Your plan</h3>
+<div class="bar" aria-hidden="true"><i id="pb"></i></div>
+<div id="pt" style="font-weight:700">0 of 3 steps done</div>
+<div class="tch" id="tc"></div>
+<div id="wn"></div>
+<p class="msg" id="mg" aria-live="polite"></p>
+<div class="row"><a class="btn bp go" id="go" href="#" target="_blank" rel="noopener" aria-disabled="true">Send on WhatsApp</a><button class="btn bg" id="cp" type="button" style="margin:0">Copy</button></div>
+<p class="sv" id="sv"></p><p class="sv">If WhatsApp doesn’t open, tap Copy, then paste the message into a chat with +92 320 1719494.</p>
+</aside>
 </div>
 </section>
 
-<section id="subjects">
-<h2 class="rv">All subjects, one roof</h2>
-<p class="lead rv">Choose physical classes in DHA Phase 6 or join from anywhere online.</p>
-<div class="grid" id="sg"></div>
+<section id="teachers">
+<h2 class="rv" data-n="Ask for a demo before you decide">Meet the teachers</h2>
+<p class="lead rv">Ask for a demo lecture before you decide. The academy says demos are available for every teacher.</p>
+<div class="tg3" id="tg"></div>
 </section>
 
-<section id="faculty">
-<h2 class="rv">Teachers who ignite minds</h2>
-<p class="lead rv">Five to thirty years of teaching across Cambridge boards. Swipe to meet them.</p>
-<div class="fac rv" id="fg"></div>
+<section id="faq">
+<h2 class="rv" data-n="What parents usually ask first">Quick answers</h2>
+<details><summary>Can I study online?</summary><p>Yes. Classes run online or physically in DHA Phase 6, depending on the teacher. The planner shows you which.</p></details>
+<details><summary>Where are physical classes?</summary><p>Ittehad Commercial, Phase 6 DHA, Karachi.</p></details>
+<details><summary>Can I try a class first?</summary><p>Demo lectures are offered for every teacher. Tick “demo first” in the planner and it goes in your message.</p></details>
+<details><summary>What are the fees and timings?</summary><p>They aren’t published on the academy’s page, so your message asks for both.</p></details>
+<details><summary>Which exams do you cover?</summary><p>Cambridge O Level, IGCSE and A Level.</p></details>
 </section>
 
-<section id="enquire">
-<div class="enq">
-<div>
-<h2 class="rv">Tell us the class. We’ll reply on WhatsApp.</h2>
-<p class="lead rv">Pick your level and subjects. Your enquiry message writes itself, and you can edit it before sending.</p>
-</div>
-<form id="f" autocomplete="off" onsubmit="return false" class="rv">
-<fieldset><legend>Level</legend><div class="chips" id="level"></div></fieldset>
-<fieldset><legend>Subjects</legend><div class="chips" id="subj"></div></fieldset>
-<fieldset><legend>Class mode</legend><div class="chips" id="mode"></div></fieldset>
-<div style="margin-bottom:18px"><label class="t" for="nm">Student’s name (optional)</label><input id="nm" type="text" placeholder="e.g. Ayaan"></div>
-<p class="t">Your message</p>
-<p class="bubble" id="msg" aria-live="polite"></p>
-<a class="go" id="go" href="#" target="_blank" rel="noopener" aria-disabled="true">Send on WhatsApp</a>
-<p class="hint" id="hint"></p>
-</form>
+<section id="contact">
+<h2 class="rv" data-n="Pick whichever way suits you">Talk to Ignite</h2>
+<div class="ct" style="margin-top:18px">
+<a href="https://wa.me/923201719494">WhatsApp<small>+92 320 1719494</small></a>
+<a href="tel:+923201719494">Call<small>+92 320 1719494</small></a>
+<a href="mailto:info@igniteacademy.pk">Email<small>info@igniteacademy.pk</small></a>
+<a href="https://www.google.com/maps/search/?api=1&query=Ittehad+Commercial+Phase+6+DHA+Karachi" target="_blank" rel="noopener">Find the campus<small>Ittehad Commercial, Phase 6 DHA</small></a>
 </div>
 </section>
-
-<p class="note">Concept redesign shown as a sample, not the official Ignite Academy site. Subjects, teachers and contact details come from the academy’s public page. Illustrations are original vector art, not photos of the academy.</p>
-<a class="fab" id="fab" href="#enquire" aria-label="Go to enquiry form">WA</a>
+<p class="dis">Concept design shown as a sample, not the official Ignite Academy site. Subjects, teachers and contact details come from the academy’s public page. Teacher matching is based on that page, so the academy should confirm it.</p>
+</main>
+<nav class="dock" aria-label="Quick actions"><a href="tel:+923201719494">Call</a><a id="dw" href="https://wa.me/923201719494" target="_blank" rel="noopener">WhatsApp</a><a class="m" href="#plan">Build combo</a></nav>
 
 <script>
 (function(){
-var NUMBER="923201719494",RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
-/* headline words */
-var h=document.getElementById("h1"),words=h.textContent.split(" ");h.textContent="";
-words.forEach(function(w,i){var s=document.createElement("span");s.className="w";s.textContent=w;s.style.animationDelay=(.2+i*.14)+"s";h.appendChild(s);h.appendChild(document.createTextNode(" "))});
-/* orbit badges */
-var SUB=[["Ec","Economics","O & A Level"],["Ph","Physics","O Level / IGCSE"],["Ma","Mathematics","O & A Level"],["Ch","Chemistry","O Level / IGCSE"],["Ac","Accounts","O & A Level"],["CS","Computer Science","O & A Level"]];
-var orb=document.getElementById("orb"),NS="http://www.w3.org/2000/svg";
-SUB.forEach(function(s,i){var a=i/6*Math.PI*2,x=200+150*Math.cos(a),y=200+150*Math.sin(a);
-var g=document.createElementNS(NS,"g");g.innerHTML='<circle class="node" cx="'+x+'" cy="'+y+'" r="24"/><text class="nt" x="'+x+'" y="'+y+'">'+s[0]+'</text>';orb.appendChild(g)});
-/* sparks */
-var art=document.getElementById("art");if(!RM)for(var i=0;i<14;i++){var p=document.createElement("i");p.className="sp";p.style.left=(10+Math.random()*80)+"%";p.style.animationDuration=(5+Math.random()*6)+"s";p.style.animationDelay=(Math.random()*6)+"s";art.appendChild(p)}
-/* marquee */
-var m="";for(var k=0;k<2;k++)SUB.forEach(function(s){m+="<span>"+s[1]+"</span><span>/</span>"});document.getElementById("mq").innerHTML=m+m;
-/* subject cards */
-var sg=document.getElementById("sg");
-SUB.forEach(function(s){var d=document.createElement("div");d.className="card rv";d.innerHTML='<div class="ic">'+s[0]+'</div><h3>'+s[1]+'</h3><p>'+s[2]+'</p>';sg.appendChild(d);
-if(!RM){d.addEventListener("pointermove",function(e){var r=d.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;d.style.transform="perspective(600px) rotateY("+x*10+"deg) rotateX("+(-y*10)+"deg)"});d.addEventListener("pointerleave",function(){d.style.transform=""})}});
-/* faculty */
-var F=[["Muhammad Mubashir","Founder, Economics","5+ years","M"],["Sir Haroon","Physics, Maths, Chemistry","30 years, DHA Phase 6","H"],["Sir Yasir","Accounts","6 years, online and physical","Y"],["Sir Fahad Khan","Computer Science, Maths","5 years, online","F"],["Sir Haseeb","Computer Science","2 years, online","S"]];
-var fg=document.getElementById("fg");F.forEach(function(f){var d=document.createElement("div");d.className="p";d.innerHTML='<div class="av">'+f[3]+'</div><b>'+f[0]+'</b><span>'+f[1]+'<br>'+f[2]+'</span>';fg.appendChild(d)});
-/* reveal + count */
-function count(el){var n=+el.dataset.n,s=el.dataset.s||"";if(RM){el.textContent=n+s;return}var t0=performance.now();(function f(t){var p=Math.min((t-t0)/1400,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)))+(p===1?s:"");if(p<1)requestAnimationFrame(f)})(t0)}
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("on");e.target.querySelectorAll("[data-n]").forEach(count);io.unobserve(e.target)}})},{threshold:.2});
+var NUM="923201719494",K="ignite-v3";
+var SUBS={Economics:["Mubashir"],Physics:["Haroon"],Mathematics:["Haroon","Fahad"],Chemistry:["Haroon"],Accounts:["Yasir"],"Computer Science":["Fahad","Haseeb"]};
+var T=[["Mubashir","Muhammad Mubashir","Founder. Economics, O & A Level. 5+ years.",null],["Haroon","Sir Haroon","Physics, Maths, Chemistry. 30 years. Physical classes in DHA Phase 6.","https://www.youtube.com/@sirharoon3141"],["Yasir","Sir Yasir","Accounts, O & A Level. 6 years. Online and physical.",null],["Fahad","Sir Fahad Khan","Computer Science and Maths. 5 years. Online only.",null],["Haseeb","Sir Haseeb","O Level Computer Science. 2 years. Online only.",null]];
+var ONLINE_ONLY=["Fahad","Haseeb"];
+var PRE=[["Science combo",["Physics","Chemistry","Mathematics"]],["Business combo",["Economics","Accounts","Mathematics"]],["Tech combo",["Computer Science","Mathematics"]]];
+var S={lvl:"",subs:[],mod:"",day:[],tod:[],dm:[],nm:""};
+var groups=[];
+function mk(id,items,key,multi,cls){var box=document.getElementById(id);items.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="c "+(cls||"");b.textContent=t;b.onclick=function(){if(multi){var i=S[key].indexOf(t);i>-1?S[key].splice(i,1):S[key].push(t)}else S[key]=S[key]===t?"":t;sync();};box.appendChild(b);groups.push([b,key,t,multi])})}
+mk("lvl",["O Level / IGCSE","A Level"],"lvl",false);
+mk("sub",Object.keys(SUBS),"subs",true);
+mk("mod",["Physical, DHA Phase 6","Online","Either is fine"],"mod",false);
+mk("day",["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],"day",true);
+mk("tod",["Morning","Afternoon","Evening"],"tod",true);
+mk("dm",["Demo lecture first"],"dm",true);
+var pre=document.getElementById("pre");PRE.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="c pre";b.textContent=p[0];b.onclick=function(){S.subs=p[1].slice();sync()};pre.appendChild(b)});
+var nm=document.getElementById("nm");nm.oninput=function(){S.nm=nm.value;sync()};
+function sync(){
+  groups.forEach(function(g){var on=g[3]?S[g[1]].indexOf(g[2])>-1:S[g[1]]===g[2];g[0].setAttribute("aria-pressed",String(on))});
+  var done=(S.lvl?1:0)+(S.subs.length?1:0)+(S.mod?1:0);
+  document.getElementById("pb").style.width=(done/3*100)+"%";
+  document.getElementById("pt").textContent=done===3?"Ready to send":done+" of 3 steps done";
+  var tn={};S.subs.forEach(function(s){SUBS[s].forEach(function(t){tn[t]=1})});
+  var tc=document.getElementById("tc");tc.innerHTML="";Object.keys(tn).forEach(function(k){T.forEach(function(t){if(t[0]===k){var s=document.createElement("span");s.textContent=t[1];tc.appendChild(s)}})});
+  var w=[];
+  if(S.lvl==="A Level"&&(S.subs.indexOf("Physics")>-1||S.subs.indexOf("Chemistry")>-1))w.push("The academy’s page lists Physics and Chemistry for O Level / IGCSE only. Your message asks them to confirm A Level.");
+  if(S.mod==="Physical, DHA Phase 6"&&S.subs.some(function(s){return SUBS[s].every(function(t){return ONLINE_ONLY.indexOf(t)>-1})}))w.push("Computer Science is listed as online only.");
+  document.getElementById("wn").innerHTML=w.map(function(x){return '<p class="warn">'+x+'</p>'}).join("");
+  var L=["Assalam o Alaikum, I’d like to enquire about Ignite Academy."];
+  if(S.nm.trim())L.push("Student: "+S.nm.trim());
+  if(S.lvl)L.push("Level: "+S.lvl);if(S.subs.length)L.push("Subjects: "+S.subs.join(", "));
+  if(S.mod)L.push("Class mode: "+S.mod);
+  if(S.day.length)L.push("Preferred days: "+S.day.join(", "));
+  if(S.tod.length)L.push("Preferred time: "+S.tod.join(", "));
+  if(S.dm.length)L.push("Could we have a demo lecture first?");
+  if(w.length&&S.lvl==="A Level")L.push("Please confirm A Level availability for the subjects above.");
+  L.push("Could you share the timings and fees?");
+  var tx=L.join("\n");document.getElementById("mg").textContent=tx;
+  var go=document.getElementById("go");go.setAttribute("aria-disabled","false");go.href="https://api.whatsapp.com/send?phone="+NUM+"&text="+encodeURIComponent(tx);document.getElementById("dw").href=go.href;
+  window._tx=tx;
+  try{localStorage.setItem(K,JSON.stringify(S));document.getElementById("sv").textContent="Draft saved on this device."}catch(e){document.getElementById("sv").textContent=""}
+}
+document.getElementById("cp").onclick=function(){var b=this;function ok(){b.textContent="Copied";setTimeout(function(){b.textContent="Copy"},1500)}
+ try{navigator.clipboard.writeText(window._tx).then(ok,function(){b.textContent="Copy failed"})}catch(e){b.textContent="Copy failed"}};
+try{var d=JSON.parse(localStorage.getItem(K)||"null");if(d&&typeof d==="object"){["lvl","mod","nm"].forEach(function(k){if(typeof d[k]==="string")S[k]=d[k]});["subs","day","tod","dm"].forEach(function(k){if(Array.isArray(d[k]))S[k]=d[k].filter(function(x){return typeof x==="string"})});nm.value=S.nm}}catch(e){}
+sync();
+/* teachers */
+var tg=document.getElementById("tg");T.forEach(function(t){var d=document.createElement("div");d.className="tc rv";var msg="Assalam o Alaikum, could you please share a demo lecture by "+t[1]+"?";
+d.innerHTML="<b>"+t[1]+"</b><span>"+t[2]+"</span>"+(t[3]?'<a href="'+t[3]+'" target="_blank" rel="noopener">Watch demo lectures on YouTube</a>':'<a href="https://wa.me/'+NUM+'?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener">Ask for a demo lecture</a>');tg.appendChild(d)});
+/* theme + reveal */
+var th=document.getElementById("th"),dk=matchMedia("(prefers-color-scheme: dark)").matches;
+th.onclick=function(){dk=!dk;document.documentElement.setAttribute("data-theme",dk?"dark":"light")};
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("on");io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll(".rv").forEach(function(x){io.observe(x)});
-/* form */
-var S={level:"",subj:[],mode:""};
-function chips(id,items,multi,key){var box=document.getElementById(id);items.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.setAttribute("aria-pressed","false");
-b.onclick=function(){if(multi){var i=S[key].indexOf(t);if(i>-1)S[key].splice(i,1);else S[key].push(t);b.setAttribute("aria-pressed",String(i===-1))}else{var on=S[key]===t;S[key]=on?"":t;[].forEach.call(box.children,function(c){c.setAttribute("aria-pressed","false")});if(!on)b.setAttribute("aria-pressed","true")}render()};box.appendChild(b)})}
-chips("level",["O Level / IGCSE","A Level"],false,"level");
-chips("subj",SUB.map(function(s){return s[1]}),true,"subj");
-chips("mode",["Physical, DHA Phase 6","Online"],false,"mode");
-var nm=document.getElementById("nm");nm.oninput=render;
-function render(){var ready=S.level&&S.subj.length,L=["Assalam o Alaikum, I’d like to enquire about classes at Ignite Academy."];
-if(nm.value.trim())L.push("Student: "+nm.value.trim());L.push("Level: "+(S.level||"…"));L.push("Subjects: "+(S.subj.length?S.subj.join(", "):"…"));if(S.mode)L.push("Class mode: "+S.mode);L.push("Could you share the timings and fees?");
-var tx=L.join("\n");document.getElementById("msg").textContent=tx;var go=document.getElementById("go");go.setAttribute("aria-disabled",ready?"false":"true");go.href=ready?"https://wa.me/"+NUMBER+"?text="+encodeURIComponent(tx):"#";
-document.getElementById("hint").textContent=ready?"This opens WhatsApp with the message above.":"Pick a level and at least one subject to continue."}
-render();
 })();
 </script>
 </body>
